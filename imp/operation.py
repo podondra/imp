@@ -2,7 +2,7 @@ import numpy as np
 from functools import partial
 
 
-fliplf = np.fliplr
+fliplr = np.fliplr
 
 flipud = np.flipud
 
