@@ -10,7 +10,7 @@ def write(img, fp):
     '''Write array as image to fp.'''
     try:
         Image.fromarray(img.astype(np.uint8)).save(fp)
-    except (KeyError, IOError) as e:
+    except (ValueError, KeyError, IOError) as e:
         print(e)
         return False
     return True
