@@ -11,10 +11,7 @@ def inverse(img):
 
 def rgb2gray(img):
     # https://www.mathworks.com/help/matlab/ref/rgb2gray.html
-    out_img = np.zeros_like(img)
-    out_shape = (*img.shape[:2], 1)
-    r, g, b = img[:, :, 0], img[:, :, 1], img[:, :, 2]
-    out_img[...] = (0.2989 * r + 0.5870 * g + 0.1140 * b).reshape(out_shape)
+    out_img = np.sum(np.array([0.2989, 0.5870,  .1140]) * img, axis=2)
     return out_img
 
 def brightness(img, factor):
