@@ -26,13 +26,22 @@ def brightness(img, factor):
     return out_img
 
 def convolution(img, kernel, factor=1):
-    out_img = np.zeros_like(img)
-    kernel = np.array(kernel, dtype=np.float32).reshape(3, 3, 1)
     h, w, _ = img.shape
-    for i in range(1, h - 1):
-        for j in range(1, w - 1):
-            window = img[i - 1:i + 2, j - 1:j + 2]
-            out_img[i, j] = np.sum((window * kernel).reshape(-1, 3), axis=0)
+    out_img = np.zeros((h - 2, w - 2, 3), dtype=np.float32)
+    kernel = np.array(kernel, dtype=np.float32).reshape(3, 3, 1)
+
+    out_img[...] = (
+            kernel[0][0] * img[:-2, :-2] +
+            kernel[0][1] * img[:-2, 1:-1] +
+            kernel[0][2] * img[:-2, 2:] +
+            kernel[1][0] * img[1:-1, :-2] +
+            kernel[1][1] * img[1:-1, 1:-1] +
+            kernel[1][2] * img[1:-1, 2:] +
+            kernel[2][0] * img[2:, :-2] +
+            kernel[2][1] * img[2:, 1:-1] +
+            kernel[2][2] * img[2:, 2:]
+            )
+
     out_img *= factor
     out_img[out_img > 255] = 255
     out_img[out_img < 0] = 0
