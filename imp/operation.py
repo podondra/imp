@@ -2,6 +2,9 @@ import numpy as np
 from functools import partial
 
 
+class BrightnessOutOfRangeException(Exception):
+    pass
+
 fliplr = np.fliplr
 
 flipud = np.flipud
@@ -11,26 +14,25 @@ def inverse(img):
 
 def rgb2gray(img):
     # https://www.mathworks.com/help/matlab/ref/rgb2gray.html
-    out_img = np.sum(np.array([0.2989, 0.5870,  .1140]) * img, axis=2)
-    return out_img
+    return np.sum(np.array([0.2989, 0.5870,  .1140]) * img, axis=2)
 
 def brightness(img, factor):
-    if -1 > factor > 1:
-        raise Exception
-    out_img = np.zeros_like(img)
+    if factor < -1 or 1 < factor:
+        raise BrightnessOutOfRangeException
+
     out_img = img + (255 * factor)
+
     if factor < 0:
         out_img[out_img < 0] = 0
     else:
         out_img[out_img > 255] = 255
+
     return out_img
 
 def convolution(img, kernel, factor=1):
-    h, w, _ = img.shape
-    out_img = np.zeros((h - 2, w - 2, 3), dtype=np.float32)
-    kernel = np.array(kernel, dtype=np.float32).reshape(3, 3, 1)
+    kernel = np.array(kernel, dtype=np.float64).reshape(3, 3, 1)
 
-    out_img[...] = (
+    out_img = (
             kernel[0][0] * img[:-2, :-2] +
             kernel[0][1] * img[:-2, 1:-1] +
             kernel[0][2] * img[:-2, 2:] +

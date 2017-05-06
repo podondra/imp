@@ -7,22 +7,58 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='A simple image processing tool.')
+
 group = parser.add_mutually_exclusive_group()
-group.add_argument('--fliplr', help='flip horizontally', action='store_true')
-group.add_argument('--flipud', help='flip vertically', action='store_true')
-group.add_argument('--inverse', help='invert colors', action='store_true')
-group.add_argument('--grayscale', help='convert to grayscale', action='store_true')
-group.add_argument('--bright', help='change brightness BRIGHTNESS is float in [-1, 1]', type=float)
-group.add_argument('--sharpen', help='sharpen', action='store_true')
-group.add_argument('--edge', help='apply kernel which detects edges', action='store_true')
-group.add_argument('--box', help='apply box blur', action='store_true')
-group.add_argument('--gaussian', help='apply gaussian blur', action='store_true')
+group.add_argument(
+        '--fliplr',
+        help='flip horizontally',
+        action='store_true'
+        )
+group.add_argument(
+        '--flipud',
+        help='flip vertically',
+        action='store_true'
+        )
+group.add_argument(
+        '--inverse',
+        help='invert colors',
+        action='store_true'
+        )
+group.add_argument(
+        '--grayscale',
+        help='convert to grayscale',
+        action='store_true'
+        )
+group.add_argument(
+        '--bright',
+        help='change brightness BRIGHTNESS is float in [-1, 1]',
+        type=float
+        )
+group.add_argument(
+        '--sharpen',
+        help='sharpen',
+        action='store_true'
+        )
+group.add_argument(
+        '--edge',
+        help='apply kernel which detects edges',
+        action='store_true'
+        )
+group.add_argument(
+        '--box',
+        help='apply box blur',
+        action='store_true'
+        )
+group.add_argument(
+        '--gaussian',
+        help='apply gaussian blur',
+        action='store_true'
+        )
+
 parser.add_argument('INPUT', help='input image')
 parser.add_argument('OUTPUT', help='output image')
-args = parser.parse_args()
 
-# start measure time
-start = time.time()
+args = parser.parse_args()
 
 # read input image
 img = imp.io.read(args.INPUT)
@@ -46,8 +82,5 @@ elif args.box:
 elif args.gaussian:
     img = imp.operation.gaussian_blur(img)
 
-# read output image
+# write output image
 imp.io.write(img, args.OUTPUT)
-
-# print elapsed time
-print('Time:', time.time() - start)

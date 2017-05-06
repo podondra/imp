@@ -4,7 +4,7 @@ import numpy as np
 
 def read(fp):
     '''Open image with Pillow lib and return it as numpy array.'''
-    return np.asarray(Image.open(fp), dtype=np.float32)
+    return np.asarray(Image.open(fp), dtype=np.float64)
 
 def write(img, fp):
     '''Write array as image to fp.'''
