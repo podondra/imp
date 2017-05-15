@@ -20,6 +20,16 @@ group.add_argument(
         action='store_true'
         )
 group.add_argument(
+        '--transpose',
+        help='transpose image',
+        action='store_true'
+        )
+group.add_argument(
+        '--rotate',
+        help='rotate image left',
+        action='store_true'
+        )
+group.add_argument(
         '--inverse',
         help='invert colors',
         action='store_true'

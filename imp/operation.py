@@ -9,6 +9,10 @@ fliplr = np.fliplr
 
 flipud = np.flipud
 
+transpose = partial(np.transpose, axes=(1, 0, 2))
+
+rotate = np.rot90
+
 def inverse(img):
     return 255 - img
 
