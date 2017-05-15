@@ -4,6 +4,7 @@ import imp.io
 import imp.operation
 import time
 import argparse
+import sys
 
 
 parser = argparse.ArgumentParser(description='A simple image processing tool.')
@@ -72,11 +73,17 @@ args = parser.parse_args()
 
 # read input image
 img = imp.io.read(args.INPUT)
+if img is None:
+    sys.exit(1)
 
 if args.fliplr:
     img = imp.operation.fliplr(img)
 elif args.flipud:
     img = imp.operation.flipud(img)
+elif args.transpose:
+    img = imp.operation.transpose(img)
+elif args.rotate:
+    img = imp.operation.rotate(img)
 elif args.inverse:
     img = imp.operation.inverse(img)
 elif args.grayscale:
@@ -93,4 +100,5 @@ elif args.gaussian:
     img = imp.operation.gaussian_blur(img)
 
 # write output image
-imp.io.write(img, args.OUTPUT)
+if imp.io.write(img, args.OUTPUT) == False:
+    sys.exit(1)
